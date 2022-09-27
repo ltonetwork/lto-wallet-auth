@@ -12,6 +12,8 @@ This service allows a user to log into the LTO web wallet using the mobile walle
 
     npm run start
 
+By default, the service will work for testnet. For mainnet set env var `LTO_NETWORK_ID=L`.
+
 ### Step 1 - Web wallet
 
 From the web wallet, create a websocket connection to `https://wallet-auth.lto.network/connect`. Upon connection the

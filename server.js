@@ -6,7 +6,7 @@ const { LTO, Binary } = require("@ltonetwork/lto");
 
 const app = express();
 const wsSockets = new Map();
-const lto = new LTO(process.env.LTO_NETWORK_ID || 'L');
+const lto = new LTO(process.env.LTO_NETWORK_ID || 'T');
 const port = process.env.PORT || 3000;
 
 const wsServer = new ws.Server({ noServer: true, path: "/connect" });
@@ -20,7 +20,7 @@ wsServer.on('connection', async socket => {
         wsSockets.delete(code);
     });
 
-    socket.send(code);
+    socket.send(JSON.stringify({ code }));
 
     // Expecting a response within 10m
     setTimeout(() => socket.close(), 600000);
