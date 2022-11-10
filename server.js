@@ -27,11 +27,19 @@ wsServer.on('connection', async socket => {
 });
 
 function clientError(res, status, message) {
-    res.status(status).write(message)
+    res.status(status).write(message);
     res.end();
 }
 
 app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+    res.status(200).header('Content-Type: application/json').write(JSON.stringinfy({
+        name: "LTO Wallet Auth",
+        network: lto.network
+    }));
+    res.end();
+});
 
 app.post('/:code', (req, res) => {
     const code = req.params.code;
@@ -74,3 +82,4 @@ server.on('upgrade', (request, socket, head) => {
         wsServer.emit('connection', socket, request);
     });
 });
+
