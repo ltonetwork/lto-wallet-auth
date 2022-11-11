@@ -19,4 +19,5 @@ axios
         publicKey: account.publicKey,
         signature: account.sign(`lto:sign:${url}`).base58,
     }, {timeout: 5000})
-    .then(resp => console.log(resp.data));
+    .then(resp => console.log(resp.data))
+    .catch(err => console.error(`${err}. ${err.response.data}`));

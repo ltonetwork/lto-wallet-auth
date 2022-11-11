@@ -63,7 +63,7 @@ app.post('/:code', (req, res) => {
     ).length > 0;
 
     if (!verified) {
-        return clientError(res, 400, "Invalid signature");
+        return clientError(res, 400, "Invalid signature for " + `lto:sign:${req.protocol}://${req.hostname}${req.originalUrl}`);
     }
 
     wsSockets.get(code).send(JSON.stringify({
