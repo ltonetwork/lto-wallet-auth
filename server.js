@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.status(200).header('Content-Type: application/json').write(JSON.stringify({
         name: "LTO Wallet Auth",
-        network: lto.network
+        network: lto.networkId || lto.networkByte
     }));
     res.end();
 });
