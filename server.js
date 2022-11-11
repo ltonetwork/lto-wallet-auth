@@ -56,10 +56,13 @@ app.post('/:code', (req, res) => {
     });
 
     // Accept both with and without port
-    const messages = [
+    const messages = [...new Set([
         `lto:sign:${req.protocol}://${req.hostname}${req.originalUrl}`,
-        `lto:sign:${req.protocol}://${req.hostname}:${port}${req.originalUrl}`
-    ];
+        `lto:sign:${req.protocol}://${req.hostname}:${port}${req.originalUrl}`,
+        `lto:sign:https://${req.hostname}${req.originalUrl}`,
+        `lto:sign:https://${req.hostname}:${port}${req.originalUrl}`,
+    ])];
+    
     const verified = messages.filter(
         msg => account.verify(msg, Binary.fromBase58(req.body.signature))
     ).length > 0;
