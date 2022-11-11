@@ -15,6 +15,8 @@ wsServer.on('connection', async socket => {
     const code = new Binary(bytes).base58;
 
     wsSockets.set(code, socket);
+    
+    console.log(`Auth: ${code}`);
 
     socket.on('close', () => {
         wsSockets.delete(code);
@@ -42,8 +44,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/:code', (req, res) => {
-    const code = req.params.code;
-
+    const {code} = req.params;
+    
     if (!wsSockets.has(code)) return clientError(res, 404, "Code is no longer active");
     if (!req.body.publicKey) return clientError(res, 400, "Missing required body param 'publicKey'");
     if (!req.body.signature) return clientError(res, 400, "Missing required body param 'signature'");
